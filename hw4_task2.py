@@ -13,7 +13,7 @@ def sieve(n):
         while i * p <= n:
             lst[i * p] = 0
             i += 1
-        for num in lst:
+        for num in lst[p:]:
             if num > p:
                 p = num
                 break
@@ -62,40 +62,39 @@ def simple_solution(n):
     res = simple_num(n*20)
     return(res[n-1])
 
-
 #Профилируем
-cProfile.run('sieve_solution(5000)')
+cProfile.run('sieve_solution(3000)')
 """
 Результат:
-  9598 function calls in 15.628 seconds
+6063 function calls in 3.983 seconds
 
    Ordered by: standard name
 
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-        1    0.000    0.000   15.628   15.628 <string>:1(<module>)
-        1    0.002    0.002    0.002    0.002 hw4_task2.py:22(<listcomp>)
-        1    7.121    7.121   15.627   15.627 hw4_task2.py:5(sieve)
-        1    0.000    0.000   15.627   15.627 hw4_task2.py:54(sieve_solution)
-        1    0.003    0.003    0.003    0.003 hw4_task2.py:7(<listcomp>)
-        1    0.000    0.000   15.628   15.628 {built-in method builtins.exec}
-     9591    8.502    0.001    8.502    0.001 {built-in method builtins.max}
+        1    0.000    0.000    3.983    3.983 <string>:1(<module>)
+        1    0.001    0.001    0.001    0.001 hw4_task2.py:22(<listcomp>)
+        1    0.556    0.556    3.983    3.983 hw4_task2.py:5(sieve)
+        1    0.000    0.000    3.983    3.983 hw4_task2.py:56(sieve_solution)
+        1    0.002    0.002    0.002    0.002 hw4_task2.py:7(<listcomp>)
+        1    0.000    0.000    3.983    3.983 {built-in method builtins.exec}
+     6056    3.424    0.001    3.424    0.001 {built-in method builtins.max}
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
 """
 
-cProfile.run('simple_solution(5000)')
+cProfile.run('simple_solution(3000)')
 """
-Результат
- 9599 function calls in 17.204 seconds
+Результат:
+ 6064 function calls in 6.548 seconds
 
    Ordered by: standard name
 
    ncalls  tottime  percall  cumtime  percall filename:lineno(function)
-        1    0.000    0.000   17.204   17.204 <string>:1(<module>)
-        1   17.202   17.202   17.204   17.204 hw4_task2.py:27(simple_num)
-        1    0.000    0.000   17.204   17.204 hw4_task2.py:59(simple_solution)
-        1    0.000    0.000   17.204   17.204 {built-in method builtins.exec}
-     9594    0.002    0.000    0.002    0.000 {method 'append' of 'list' objects}
+        1    0.000    0.000    6.548    6.548 <string>:1(<module>)
+        1    6.548    6.548    6.548    6.548 hw4_task2.py:27(simple_num)
+        1    0.000    0.000    6.548    6.548 hw4_task2.py:61(simple_solution)
+        1    0.000    0.000    6.548    6.548 {built-in method builtins.exec}
+     6059    0.001    0.000    0.001    0.000 {method 'append' of 'list' objects}
         1    0.000    0.000    0.000    0.000 {method 'disable' of '_lsprof.Profiler' objects}
 """
 
-#Оба алгоритма показывают примерно одинаковое время.
+#Алгоритм на основе Решета Эратосфена быстрее в 1.6 раза.
