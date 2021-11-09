@@ -24,26 +24,25 @@ Windows-10-10.0.19041-SP0
 # Счетчик памяти
 def memcalc(vrs, level=0, debug=False):
     total = 0
-    indent = " " * (4 * level) + "->"
-    if debug: print(f"{indent}Уровень{level} На входе переменная типа {type(vrs)}, ее объем {sys.getsizeof(vrs)}")
+    indent = " " * 4 * level + "->"
     total += sys.getsizeof(vrs)
-    if debug: print(f"{indent}Уровень{level} Прибавили ее объем, теперь total равен", total)
+    if debug: print(f"{indent}Уровень{level} На входе переменная типа {type(vrs).__name__}, {sys.getsizeof(vrs)} байт")
     if isinstance(vrs, list):
         if debug: print(f"{indent}Уровень{level} Заходим в список")
         for item in vrs:
             level += 1
             total += memcalc(item, level=level, debug=debug)
             level -= 1
-            if debug: print(f"{indent}Уровень{level} Прибавили ее объем, теперь total равен", total)
-        if debug: print(f"{indent}Уровень{level} Вышли из списка, теперь total равен", total)
+            if debug: print(f"{indent}Уровень{level} Прибавили элемент списка, теперь total равен", total)
+        if debug: print(f"{indent}Уровень{level} Вышли из списка, total равен", total)
     elif isinstance(vrs, dict):
         if debug: print(f"{indent}Уровень{level} Заходим в словарь")
         for val in vrs.values():
             level += 1
             total += memcalc(val, level=level, debug=debug)
             level -= 1
-            if debug: print(f"{indent}Уровень{level} Прибавили ее объем, теперь total равен", total)
-        if debug: print(f"{indent}Уровень{level} Вышли из словаря, теперь total равен", total)
+            if debug: print(f"{indent}Уровень{level} Прибавили элемент словаря, теперь total равен", total)
+        if debug: print(f"{indent}Уровень{level} Вышли из словаря, total равен", total)
     return total
 
 
@@ -63,7 +62,7 @@ def implementation1():
     for k, v in multiplicity.items():
         print(f"Числу {k} кратны {v} чисел в диапазоне от 2 до 99")
 
-    print(f"\nВ реализации используются следующие переменные {vars()}\n")
+    print(f"В реализации используются следующие переменные {vars()}")
     return list(vars().values())
 
 
@@ -105,7 +104,8 @@ def implementation3():
 
 if __name__ == "__main__":
 
-    # Если выставить в True, в функции memcalc() будет массивный вывод в консоль!
+    # Если выставить в True,
+    # в функции memcalc() будет массивный вывод в консоль!
     DEBUG = False
 
     implementations = [implementation1, implementation2, implementation3]
@@ -115,5 +115,9 @@ if __name__ == "__main__":
 
 """
 Вывод:
-
+По сравнению с реализацией 1, реализация 2 использует цикл while, который не требует range, поэтому она требует меньше памяти 
+и является оптимальной. Реализация 3 хранит в списках все числа, которые делятся на данные. Хранение списков со значениями неэффективно,
+так как и сами списки занимают память, и каждое значение int  в списке требует дополнительные 28 байт. 
+Таким образом, реализация 3 является самой неэффективной, но зато она позволяет вывести все числа, кратные интересующим.
+Реализация 1 и Реализация 2 хранят только количества, но не сами числа.
 """
