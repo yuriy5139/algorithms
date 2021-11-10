@@ -36,7 +36,5 @@ def reverse_sort(posneg):
 if __name__ == "__main__":
     lst = [i for i in range(-100, 100)]
     random.shuffle(lst)
-    print("Исходный массив:")
-    print(lst)
-    print("Отсортированный массив:")
-    print(reverse_sort(lst))
+    print("Исходный массив:\n", lst)
+    print("Отсортированный массив:\n", reverse_sort(lst))
